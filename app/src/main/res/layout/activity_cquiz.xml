@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:title="C Quiz"
-        android:titleTextColor="@android:color/white" />
+        android:titleTextColor="@android:color/black" />
 
     <!-- Question text -->
     <TextView
