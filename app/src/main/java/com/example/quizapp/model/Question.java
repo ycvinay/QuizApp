@@ -17,8 +17,7 @@ public class Question {
     private String answer;
     private String category;
 
-    public Question(int id, String question, String option1, String option2, String option3, String option4, String answer, String category) {
-        this.id = id;
+    public Question(String question, String option1, String option2, String option3, String option4, String answer, String category) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
