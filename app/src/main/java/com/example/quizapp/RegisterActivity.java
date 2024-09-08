@@ -58,6 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setEmail(email);
                 user.setPhone(phone);
                 appDatabase.userDao().insert(user);
+                Intent intent = new Intent(RegisterActivity.this, SignInActivity.class);
+                startActivity(intent);
                 runOnUiThread(() -> Toast.makeText(this, "User registered!", Toast.LENGTH_SHORT).show());
             } else {
                 runOnUiThread(() -> Toast.makeText(this, "User already exists", Toast.LENGTH_SHORT).show());
