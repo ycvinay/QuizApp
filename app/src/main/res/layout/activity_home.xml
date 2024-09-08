@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- ActionBar/Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Quiz App"
+        app:title="YC Bank"
         app:titleTextColor="@android:color/white"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:menu="@menu/menu"/>
     <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +40,7 @@
             android:layout_marginTop="16dp" />
 
         <Button
-            android:id="@+id/btnStartPythonQuiz"
+            android:id="@+id/categories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categories"
