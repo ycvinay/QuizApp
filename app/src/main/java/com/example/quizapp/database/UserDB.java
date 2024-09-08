@@ -10,17 +10,17 @@ import com.example.quizapp.dao.UserDao;
 import com.example.quizapp.model.User;
 
 @Database(entities = {User.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
-    private static volatile AppDatabase INSTANCE;
+public abstract class UserDB extends RoomDatabase {
+    private static volatile UserDB INSTANCE;
 
     public abstract UserDao userDao();
 
-    public static AppDatabase getDatabase(final Context context) {
+    public static UserDB getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (UserDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "app_database")
+                                    UserDB.class, "app_database")
                             .build();
                 }
             }

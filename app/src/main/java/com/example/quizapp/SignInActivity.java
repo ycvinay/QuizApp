@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.quizapp.database.AppDatabase;
+import com.example.quizapp.database.UserDB;
 import com.example.quizapp.model.User;
 
 public class SignInActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class SignInActivity extends AppCompatActivity {
     private EditText etEmailSignIn, etPhoneSignIn;
     private Button btnSignIn;
     private TextView tvRegister;
-    private AppDatabase appDatabase;
+    private UserDB appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class SignInActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         tvRegister = findViewById(R.id.tvRegister);
 
-        appDatabase = AppDatabase.getDatabase(this);
+        appDatabase = UserDB.getDatabase(this);
 
         btnSignIn.setOnClickListener(v -> signInUser());
         tvRegister.setOnClickListener(v -> {

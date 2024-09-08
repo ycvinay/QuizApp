@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.quizapp.dao.*;
-import com.example.quizapp.database.AppDatabase;
+import com.example.quizapp.database.UserDB;
 import com.example.quizapp.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -18,7 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etUsername, etEmail, etPhone;
     private Button btnRegister;
     private TextView tvSignIn;
-    private AppDatabase appDatabase;
+    private UserDB appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         tvSignIn = findViewById(R.id.tvSignIn);
 
-        appDatabase = AppDatabase.getDatabase(this);
+        appDatabase = UserDB.getDatabase(this);
 
         btnRegister.setOnClickListener(v -> registerUser());
         tvSignIn.setOnClickListener(v -> {

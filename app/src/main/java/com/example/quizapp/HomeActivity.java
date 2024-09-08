@@ -20,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
 
-    private Button btnStartCQuiz, btnSelectCategories;
+    private Button btnStartCQuiz, btnSelectCategories, btnResources;
 
     SharedPreferences sharedPreferences;
     private static final String MY_PREFS = "My_Prefs";
@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
 
         btnStartCQuiz = findViewById(R.id.btnStartCQuiz);
         btnSelectCategories = findViewById(R.id.categories);
+        btnResources = findViewById(R.id.btnResources);
 
         btnStartCQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CQuizActivity.class);
@@ -53,7 +54,10 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        btnResources.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ResourcesActivity.class);
+            startActivity(intent);
+        });
 
 
 
