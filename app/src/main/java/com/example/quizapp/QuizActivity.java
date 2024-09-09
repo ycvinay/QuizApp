@@ -2,8 +2,10 @@ package com.example.quizapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,8 +25,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button btnNext, btnPrevious, btnSkip;
 
     private List<Question> questionList;
-    private int currentQuestionIndex;
-    private Button selectedBtn = null;
+    private int currentQuestionIndex = 0;  // Initialize to 0
 
     private String category;
     private QuizDB db;
@@ -53,38 +54,33 @@ public class QuizActivity extends AppCompatActivity {
 
         db = QuizDB.getDatabase(this);
 
-        DatabaseInitializer.populateDB(db);
+        // Commented out to prevent unnecessary database population
+        // DatabaseInitializer.populateDB(db);
+
         loadQuestion();
 
         btnNext.setOnClickListener(v -> navigateToNextQuestion());
-        btnPrevious.setOnClickListener(v -> navigateToPrevioueQuestion());
+        btnPrevious.setOnClickListener(v -> navigateToPreviousQuestion());
         btnSkip.setOnClickListener(v -> skipQuestion());
-
-
     }
 
-    private void loadQuestion(){
-        executor.execute(() ->{
+    private void loadQuestion() {
+        executor.execute(() -> {
             questionList = db.questionDao().getQuestionsByCategory(category);
 
             runOnUiThread(() -> {
-                displayQuestion();
+                if (questionList != null && !questionList.isEmpty()) {
+                    Log.d("QuizActivity", "Number of questions: " + questionList.size());
+                    displayQuestion();
+                } else {
+                    tvQuestion.setText("No questions available.");
+                }
             });
-        });
-    }
-    private void loadCQuestion() {
-        executor.execute( () -> {
-            questionList = db.questionDao().getQuestionsByCategory("C");
-
-            runOnUiThread(() -> {
-                displayQuestion();
-            });
-
         });
     }
 
     private void displayQuestion() {
-        if (currentQuestionIndex >= 0 && currentQuestionIndex < questionList.size()) {
+        if (questionList != null && !questionList.isEmpty() && currentQuestionIndex >= 0 && currentQuestionIndex < questionList.size()) {
             Question currentQuestion = questionList.get(currentQuestionIndex);
 
             tvQuestion.setText(currentQuestion.getQuestion());
@@ -93,29 +89,39 @@ public class QuizActivity extends AppCompatActivity {
             btnOption3.setText(currentQuestion.getOption3());
             btnOption4.setText(currentQuestion.getOption4());
 
+            // Update button states
+            btnNext.setEnabled(currentQuestionIndex < questionList.size() - 1);
+            btnPrevious.setEnabled(currentQuestionIndex > 0);
+        } else {
+            // Handle case where no questions are available
+            tvQuestion.setText("No more questions.");
+            btnOption1.setText("");
+            btnOption2.setText("");
+            btnOption3.setText("");
+            btnOption4.setText("");
         }
-
     }
 
     private void navigateToNextQuestion() {
-        if (currentQuestionIndex < questionList.size() - 1) {
+        if (questionList != null && currentQuestionIndex < questionList.size() - 1) {
             currentQuestionIndex++;
             displayQuestion();
+        } else {
+            Toast.makeText(this, "You have reached the end of the quiz.", Toast.LENGTH_SHORT).show();
+            btnNext.setEnabled(false);  // Disable Next button
         }
-
     }
 
-    private void navigateToPrevioueQuestion() {
-        if (currentQuestionIndex > 0) {
+    private void navigateToPreviousQuestion() {
+        if (questionList != null && currentQuestionIndex > 0) {
             currentQuestionIndex--;
             displayQuestion();
+        } else {
+            Toast.makeText(this, "You are at the first question.", Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
     private void skipQuestion() {
         navigateToNextQuestion();
     }
-
 }

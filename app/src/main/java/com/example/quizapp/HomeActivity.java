@@ -45,7 +45,8 @@ public class HomeActivity extends AppCompatActivity {
         btnResources = findViewById(R.id.btnResources);
 
         btnStartCQuiz.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, CQuizActivity.class);
+            Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+            intent.putExtra("QUIZ_CATEGORY", "C");
             startActivity(intent);
         });
 
