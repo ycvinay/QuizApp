@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:title="C Quiz"
+        android:title="Quiz"
         android:titleTextColor="@android:color/black" />
 
     <!-- Question text -->
@@ -25,12 +25,12 @@
         android:layout_marginTop="20dp"/>
 
     <!-- Answer options as buttons -->
-
     <Button
         android:id="@+id/btnOption1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Option 1"
+        android:backgroundTint="#33B5E5"
         android:layout_below="@+id/tvQuestion"
         android:layout_marginTop="8dp" />
 
@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Option 2"
+        android:backgroundTint="#33B5E5"
         android:layout_below="@id/btnOption1"
         android:layout_marginTop="8dp" />
 
@@ -47,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Option 3"
+        android:backgroundTint="#33B5E5"
         android:layout_below="@id/btnOption2"
         android:layout_marginTop="8dp" />
 
@@ -55,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Option 4"
+        android:backgroundTint="#33B5E5"
         android:layout_below="@id/btnOption3"
         android:layout_marginTop="8dp" />
 
@@ -89,5 +92,33 @@
             android:text="Next"
             android:layout_columnWeight="1"
             android:layout_marginStart="8dp" />
+
     </GridLayout>
+
+    <!-- Submit button at the bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit" />
+
+        <Button
+            android:id="@+id/btnEnd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="End" />
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>
