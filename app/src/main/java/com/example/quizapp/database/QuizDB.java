@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.quizapp.dao.QuestionDao;
 import com.example.quizapp.model.Question;
 
-@Database(entities = {Question.class}, version = 1)
+@Database(entities = {Question.class}, version = 2, exportSchema = false)
 public abstract class QuizDB extends RoomDatabase {
     public abstract QuestionDao questionDao();
 
@@ -26,5 +26,12 @@ public abstract class QuizDB extends RoomDatabase {
 
         return INSTANCE;
     }
+
+    public static void clearDB() {
+        if (INSTANCE != null) {
+            INSTANCE.clearAllTables();
+        }
+    }
+
 
 }

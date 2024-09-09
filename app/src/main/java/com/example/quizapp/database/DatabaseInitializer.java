@@ -13,6 +13,7 @@ public class DatabaseInitializer {
         executorService.execute(() -> {
             QuestionDao dao = db.questionDao();
 
+            db.clearAllTables();
             // C Questions
             dao.insertQuestion(new Question("Which of the following is a valid variable declaration in C?", "int x;", "integer x;", "x = int;", "var x;", "int x;", "C"));
             dao.insertQuestion(new Question("What does the 'printf' function do in C?", "Prints formatted output", "Reads input from the user", "Allocates memory", "Compares two values", "Prints formatted output", "C"));
