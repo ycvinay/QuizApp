@@ -1,5 +1,6 @@
 package com.example.quizapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -7,13 +8,27 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.quizapp.database.DatabaseInitializer;
+import com.example.quizapp.database.QuizDB;
+import com.example.quizapp.model.Question;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class CQuizActivity extends AppCompatActivity {
 
     private TextView tvQuestion;
     private Button btnOption1, btnOption2, btnOption3, btnOption4;
-    private Button btnNext, btnPrevious, btnSubmit, btnSkip;
-//    private List<Question> questionList;
+    private Button btnNext, btnPrevious, btnSkip;
+
+    private List<Question> questionList;
     private int currentQuestionIndex = 0;
+    private Button selectedButton = null;
+
+    private QuizDB db;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +47,61 @@ public class CQuizActivity extends AppCompatActivity {
         btnPrevious = findViewById(R.id.btnPrevious);
         btnSkip = findViewById(R.id.btnSkip);
 
+        db = QuizDB.getDatabase(this);
+
+        DatabaseInitializer.populateDB(db);
+        loadCQuestion();
+        btnNext.setOnClickListener(v -> navigateToNextQuestion());
+        btnPrevious.setOnClickListener(v -> navigateToPrevioueQuestion());
+        btnSkip.setOnClickListener(v -> skipQuestion());
+
+
     }
+
+    private void loadCQuestion() {
+        executor.execute( () -> {
+            questionList = db.questionDao().getQuestionsByCategory("C");
+
+            runOnUiThread(() -> {
+                displayQuestion();
+            });
+
+        });
+    }
+
+    private void displayQuestion() {
+        if (currentQuestionIndex >= 0 && currentQuestionIndex < questionList.size()) {
+            Question currentQuestion = questionList.get(currentQuestionIndex);
+
+            tvQuestion.setText(currentQuestion.getQuestion());
+            btnOption1.setText(currentQuestion.getOption1());
+            btnOption2.setText(currentQuestion.getOption2());
+            btnOption3.setText(currentQuestion.getOption3());
+            btnOption4.setText(currentQuestion.getOption4());
+
+        }
+
+        }
+
+    private void navigateToNextQuestion() {
+        if (currentQuestionIndex < questionList.size() - 1) {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+    }
+
+    private void navigateToPrevioueQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            displayQuestion();
+        }
+
+    }
+
+
+    private void skipQuestion() {
+        navigateToNextQuestion();
+    }
+
 }
